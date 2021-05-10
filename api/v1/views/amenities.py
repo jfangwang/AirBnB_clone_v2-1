@@ -17,7 +17,7 @@ from flask import request
 @app_views.route("/amenities", methods=['GET'], strict_slashes=False)
 def get_amenities():
     """states"""
-    states_dict = []
+    amenities_dict = []
     for item in storage.all('Amenity').values():
         amenities_dict.append(item.to_dict())
     return jsonify(amenities_dict)

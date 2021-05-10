@@ -14,7 +14,9 @@ from models.user import User
 from flask import request
 
 
-@app_views.route("/states/<state_id>/cities", methods=['GET'], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities",
+                 methods=['GET'],
+                 strict_slashes=False)
 def get_cities(state_id=None):
     """states"""
     willy = storage.get('State', state_id)
@@ -54,7 +56,9 @@ def del_city(city_id=None):
         return jsonify({}), 200
 
 
-@app_views.route("/states/<state_id>/cities", methods=['POST'], strict_slashes=False)
+@app_views.route("/states/<state_id>/cities",
+                 methods=['POST'],
+                 strict_slashes=False)
 def post_city(state_id=None):
     """state"""
     willy2 = storage.get('State', state_id)
@@ -89,7 +93,10 @@ def put_city(city_id=None):
     if dict_w is None:
         abort(400, 'Not a JSON')
     for key, val in dict_w.items():
-        if key == 'state_id' or key == 'id' or key == 'created_at' or key == 'updated_at':
+        if key == 'state_id' or\
+           key == 'id' or\
+           key == 'created_at' or\
+           key == 'updated_at':
             pass
         else:
             if city_store is not None:
@@ -97,4 +104,3 @@ def put_city(city_id=None):
                 city_store.save()
                 return jsonify(city_store.to_dict()), 200
     abort(404)
-

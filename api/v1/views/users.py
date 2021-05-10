@@ -60,8 +60,7 @@ def post_user():
     elif "password" not in willy.keys():
         abort(400, 'Missing password')
     else:
-        new_user = User(name=willy['name'],
-                        email=willy['email'],
+        new_user = User(email=willy['email'],
                         password=willy['password'])
         new_user.save()
         return jsonify(new_user.to_dict()), 201

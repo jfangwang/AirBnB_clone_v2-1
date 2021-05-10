@@ -74,7 +74,8 @@ def post_review(place_id=None):
         willy3 = storage.get('User', willy['user_id'])
         if willy3 is None:
             abort(404)
-        new_review = Review(user_id=willy['user_id'], text=willy['text'])
+        new_review = Review(user_id=willy['user_id'], text=willy['text'],
+                            place_id=place_id)
         new_review.save()
         return jsonify(new_review.to_dict()), 201
 

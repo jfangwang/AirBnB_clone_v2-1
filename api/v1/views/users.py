@@ -32,18 +32,15 @@ def get_user(user_id=None):
         return jsonify(storage.get('User', user_id).to_dict())
 
 
-@app_views.route("/users/<user_id>",
-                 methods=['DELETE'],
-                 strict_slashes=False)
-def del_user(user_id=None):
-    """state"""
-    willy = storage.get('User', user_id)
-    if willy is None:
+@app_views.route('/users/<user_id>', methods=["DELETE"], strict_slashes=False)
+def user_delete(user_id=None):
+    """deletes a user object"""
+    userobj = storage.get(User, user_id)
+    if userobj is None:
         abort(404)
-    else:
-        storage.delete(willy)
-        storage.save()
-        return jsonify({}), 200
+    storage.delete(userobj)
+    .save()
+    return jsonify({}), 200
 
 
 @app_views.route("/users", methods=['POST'], strict_slashes=False)

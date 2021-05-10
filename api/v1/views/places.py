@@ -100,7 +100,7 @@ def put_place(place_id=None):
         abort(400, 'Not a JSON')
     if place_store is None:
         abort(404)
-   for key, val in dict_w.items():
+    for key, val in dict_w.items():
         if key == 'city_id' or\
            key == 'user_id' or\
            key == 'id' or\

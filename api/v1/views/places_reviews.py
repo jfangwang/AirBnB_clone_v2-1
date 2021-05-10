@@ -71,7 +71,11 @@ def post_review(place_id=None):
     elif "text" not in willy.keys():
         abort(400, 'Missing text')
     else:
-        new_review = City(user_id=willy['user_id'], text=willy['text'])
+        willy3 = storage.get('User', willy['user_id'])
+        if willy3 is None:
+            abort(404)
+        new_review = Review(user_id=willy['user_id'], text=willy['text'],
+                            place_id=place_id)
         new_review.save()
         return jsonify(new_review.to_dict()), 201
 
@@ -85,11 +89,11 @@ def put_review(review_id=None):
         dict_w = request.get_json()
     except:
         abort(400, 'Not a JSON')
-    if city_id is None:
+    if review_id is None:
         abort(404)
     if dict_w is None:
         abort(400, 'Not a JSON')
-    if city_store is not None:
+    if city_store is None:
         abort(404)
     for key, val in dict_w.items():
         if key == 'user_id' or\
@@ -101,4 +105,4 @@ def put_review(review_id=None):
         else:
                 setattr(city_store, key, val)
                 city_store.save()
-                return jsonify(city_store.to_dict()), 200
+    return jsonify(city_store.to_dict()), 200

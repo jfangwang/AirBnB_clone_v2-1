@@ -72,8 +72,6 @@ def put_user(user_id=None):
     """put/update state"""
     """ Request dict """
     user_store = storage.get(User, user_id)
-    if user_store is None:
-        abort(404)
     try:
         dict_w = request.get_json()
     except:
@@ -87,6 +85,8 @@ def put_user(user_id=None):
            key == 'created_at':
             pass
         else:
-            setattr(user_store, key, val)
-        user_store.save()
-    return jsonify(user_store.to_dict()), 200
+            if user_store is not None:
+                setattr(user_store, key, val)
+                user_store.save()
+                return jsonify(user_store.to_dict()), 200
+    abort(404)

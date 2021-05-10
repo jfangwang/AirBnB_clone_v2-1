@@ -105,4 +105,4 @@ def put_review(review_id=None):
         else:
                 setattr(city_store, key, val)
                 city_store.save()
-                return jsonify(city_store.to_dict()), 200
+    return jsonify(city_store.to_dict()), 200

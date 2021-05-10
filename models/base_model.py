@@ -67,10 +67,7 @@ class BaseModel:
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
         if "password" in new_dict:
-            a = new_dict["password"]
-            a = a.encode('utf-8')
-            test = hashlib.md5(a).hexdigest()
-            new_dict["password"] = test
+            new_dict.pop("password")
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]

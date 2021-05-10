@@ -10,7 +10,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-
+import hashlib
 from flask import request
 
 
@@ -60,8 +60,11 @@ def post_user():
     elif "password" not in willy.keys():
         abort(400, 'Missing password')
     else:
+        a = willy["password"]
+        a = a.encode('utf-8')
+        test = hashlib.md5(a).hexdigest()
         new_user = User(email=willy['email'],
-                        password=willy['password'])
+                        password=test)
         new_user.save()
         return jsonify(new_user.to_dict()), 201
 

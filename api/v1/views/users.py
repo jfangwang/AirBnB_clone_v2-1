@@ -46,27 +46,22 @@ def del_user(user_id=None):
         return jsonify({}), 200
 
 
-@app_views.route("/users", methods=['POST'], strict_slashes=False)
-def post_user():
-    """state"""
+@app_views.route('/users', methods=["POST"], strict_slashes=False)
+def user_create():
+    """creates a user object"""
     try:
-        willy = request.get_json()
-    except:
-        abort(400, 'Not a JSON')
-    if willy is None:
-        abort(400, 'Not a JSON')
-    elif "email" not in willy.keys():
-        abort(400, 'Missing email')
-    elif "password" not in willy.keys():
-        abort(400, 'Missing password')
-    else:
-        a = willy["password"]
-        a = a.encode('utf-8')
-        test = hashlib.md5(a).hexdigest()
-        new_user = User(email=willy['email'],
-                        password=test)
-        new_user.save()
-        return jsonify(new_user.to_dict()), 201
+        body_dict = request.get_json()
+        if body_dict is None:
+            abort(400, "Not a JSON")
+    except Exception:
+        abort(400, "Not a JSON")
+    if "email" not in body_dict.keys():
+        abort(400, "Missing email")
+    if "password" not in body_dict.keys():
+        abort(400, "Missing password")
+    userobj = User(**body_dict)
+    userobj.save()
+    return jsonify(userobj.to_dict()), 201
 
 
 @app_views.route('/users/<user_id>', methods=["PUT"],

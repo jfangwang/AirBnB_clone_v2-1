@@ -98,7 +98,9 @@ def put_place(place_id=None):
         abort(404)
     if dict_w is None:
         abort(400, 'Not a JSON')
-    for key, val in dict_w.items():
+    if place_store is None:
+        abort(404)
+   for key, val in dict_w.items():
         if key == 'city_id' or\
            key == 'user_id' or\
            key == 'id' or\
@@ -106,8 +108,6 @@ def put_place(place_id=None):
            key == 'updated_at':
             pass
         else:
-            if place_store is not None:
-                setattr(place_store, key, val)
-                place_store.save()
-                return jsonify(place_store.to_dict()), 200
-    abort(404)
+            setattr(place_store, key, val)
+            place_store.save()
+    return jsonify(place_store.to_dict()), 200

@@ -93,7 +93,7 @@ def put_review(review_id=None):
         abort(404)
     if dict_w is None:
         abort(400, 'Not a JSON')
-    if city_store is not None:
+    if city_store is None:
         abort(404)
     for key, val in dict_w.items():
         if key == 'user_id' or\

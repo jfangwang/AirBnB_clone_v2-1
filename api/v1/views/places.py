@@ -64,7 +64,7 @@ def post_place(city_id=None):
     willy2 = storage.get('City', city_id)
     if willy2 is None:
         abort(404)
-    willy3 = storage.get('User', user_id)
+    willy3 = storage.get('User', willy['user_id'])
     if willy3 is None:
         abort(404)
     try:

@@ -64,7 +64,7 @@ def post_place(city_id=None):
     willy2 = storage.get('City', city_id)
     if willy2 is None:
         abort(404)
-     try:
+    try:
         willy = request.get_json()
     except:
         abort(400, 'Not a JSON')

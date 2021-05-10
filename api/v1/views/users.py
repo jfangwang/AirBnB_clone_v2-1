@@ -55,8 +55,8 @@ def post_user():
         abort(400, 'Not a JSON')
     if willy is None:
         abort(400, 'Not a JSON')
-    elif "email" not in willy.keys():
-        abort(400, 'Missing email')
+    # elif "email" not in willy.keys():
+    #     abort(400, 'Missing email')
     elif "password" not in willy.keys():
         abort(400, 'Missing password')
     else:

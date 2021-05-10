@@ -64,10 +64,7 @@ def post_place(city_id=None):
     willy2 = storage.get('City', city_id)
     if willy2 is None:
         abort(404)
-    willy3 = storage.get('User', willy['user_id'])
-    if willy3 is None:
-        abort(404)
-    try:
+     try:
         willy = request.get_json()
     except:
         abort(400, 'Not a JSON')
@@ -78,6 +75,9 @@ def post_place(city_id=None):
     elif "user_id" not in willy.keys():
         abort(400, 'Missing user_id')
     else:
+        willy3 = storage.get('User', willy['user_id'])
+        if willy3 is None:
+            abort(404)
         new_city = Place(name=willy['name'], city_id=city_id,
                          user_id=willy['user_id'])
         # new_city = City(state_id=state_id)

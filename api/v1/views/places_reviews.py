@@ -89,7 +89,7 @@ def put_review(review_id=None):
         dict_w = request.get_json()
     except:
         abort(400, 'Not a JSON')
-    if city_id is None:
+    if review_id is None:
         abort(404)
     if dict_w is None:
         abort(400, 'Not a JSON')

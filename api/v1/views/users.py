@@ -47,7 +47,7 @@ def del_user(user_id=None):
 
 
 @app_views.route("/users", methods=['POST'], strict_slashes=False)
-def post_user(state_id=None):
+def post_user():
     """state"""
     try:
         willy = request.get_json()
@@ -60,21 +60,25 @@ def post_user(state_id=None):
     elif "password" not in willy.keys():
         abort(400, 'Missing password')
     else:
-        new_user = User(name=willy['name'])
+        new_user = User(name=willy['name'],
+                        email=willy['email'],
+                        password=willy['password'])
         new_user.save()
         return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route("/users/<user_id>", methods=['PUT'], strict_slashes=False)
-def put_user(state_id=None):
+def put_user(user_id=None):
     """put/update state"""
     """ Request dict """
     user_store = storage.get(User, user_id)
+    if user_store is None:
+        abort(404)
     try:
         dict_w = request.get_json()
     except:
         abort(400, 'Not a JSON')
-    if state_id is None:
+    if user_id is None:
         abort(404)
     if dict_w is None:
         abort(400, 'Not a JSON')
@@ -83,8 +87,6 @@ def put_user(state_id=None):
            key == 'created_at':
             pass
         else:
-            if user_store is not None:
-                setattr(user_store, key, val)
-                user_store.save()
-                return jsonify(user_store.to_dict()), 200
-    abort(404)
+            setattr(user_store, key, val)
+        user_store.save()
+    return jsonify(user_store.to_dict()), 200

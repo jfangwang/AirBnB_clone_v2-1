@@ -17,7 +17,7 @@ from flask import request
 @app_views.route("/places/<place_id>/reviews",
                  methods=['GET'],
                  strict_slashes=False)
-def get_cities(place_id=None):
+def get_reviews(place_id=None):
     """states"""
     willy = storage.get('Place', place_id)
     if willy is None:
@@ -30,7 +30,7 @@ def get_cities(place_id=None):
 
 
 @app_views.route("/reviews/<review_id>", methods=['GET'], strict_slashes=False)
-def get_city(review_id=None):
+def get_review(review_id=None):
     """state"""
     if storage.get('Review', review_id) is None:
         abort(404)
@@ -41,7 +41,7 @@ def get_city(review_id=None):
 @app_views.route("/reviews/<review_id>",
                  methods=['DELETE'],
                  strict_slashes=False)
-def del_city(review_id=None):
+def del_review(review_id=None):
     """state"""
     willy = storage.get('Review', review_id)
     if willy is None:
@@ -55,7 +55,7 @@ def del_city(review_id=None):
 @app_views.route("/places/<place_id>/reviews",
                  methods=['POST'],
                  strict_slashes=False)
-def post_city(place_id=None):
+def post_review(place_id=None):
     """state"""
     willy2 = storage.get('Place', place_id)
     if willy2 is None:
@@ -77,7 +77,7 @@ def post_city(place_id=None):
 
 
 @app_views.route("/reviews/<review_id>", methods=['PUT'], strict_slashes=False)
-def put_city(review_id=None):
+def put_review(review_id=None):
     """put/update state"""
     """ Request dict """
     city_store = storage.get(Review, review_id)
